@@ -1,4 +1,4 @@
-# claude-usage-bar-for-subscription
+# claude-usage-bar
 
 `cost-bar` is a Claude Code mod for subscription users. It draws one bar above the prompt with the model, session cost, context fill, 5h/7d plan usage, turn count and a prompt-cache countdown. It stacks under other mods that draw above the prompt instead of replacing them.
 
@@ -20,7 +20,7 @@ The last increase of cost and plan usage only updates when the value rises, so a
 ## Install
 
 ```
-/plugin install cost-bar --marketplace HyeonseongShin/claude-usage-bar-for-subscription
+/plugin install cost-bar --marketplace HyeonseongShin/claude-usage-bar
 ```
 
 Try it without installing: `claude --plugin-dir /path/to/this/repo`
