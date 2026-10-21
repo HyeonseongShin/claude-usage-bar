@@ -6,9 +6,14 @@ const asTtl = (v: unknown): Ttl | undefined => (v === '5m' || v === '1h' ? v : u
 
 type Sources = { force5m?: string; envTtl?: string; settingTtl?: unknown; enable1h?: string }
 
-// Same precedence as Claude Code's main-conversation bucket; API-key default is 5m.
-export const resolveTtl = (s: Sources): Ttl =>
-  s.force5m === '1' ? '5m' : asTtl(s.envTtl) ?? asTtl(s.settingTtl) ?? (s.enable1h === '1' ? '1h' : '5m')
+// Same precedence as Claude Code's main-conversation bucket; undefined when nothing sets it.
+export const explicitTtl = (s: Sources): Ttl | undefined =>
+  s.force5m === '1' ? '5m' : asTtl(s.envTtl) ?? asTtl(s.settingTtl) ?? (s.enable1h === '1' ? '1h' : undefined)
+
+// Subscriptions (the account reports rate limits) cache for 1h within plan limits; API keys for 5m.
+// ponytail: measured 1h-or-more on one subscription, not detected after the plan limit is exceeded.
+export const resolveTtl = (s: Sources, subscription = false): Ttl =>
+  explicitTtl(s) ?? (subscription ? '1h' : '5m')
 
 export const formatRemaining = (ms: number): string => {
   if (ms <= 0) return 'expired'

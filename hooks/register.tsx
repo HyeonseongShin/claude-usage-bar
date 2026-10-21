@@ -1,7 +1,7 @@
 import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
-import { TTL_MS, formatRemaining, resolveTtl } from './cache'
+import { TTL_MS, explicitTtl, formatRemaining, resolveTtl } from './cache'
 import { formatContext, formatLimits, formatModel, formatUsd } from './format'
 
 const usd = atom({ plugin: 'cost-bar', key: 'usd' } as const, null)
@@ -10,14 +10,14 @@ const limits = atom({ plugin: 'cost-bar', key: 'limits' } as const, [])
 const delta = atom({ plugin: 'cost-bar', key: 'delta' } as const, null)
 const limitDelta = atom({ plugin: 'cost-bar', key: 'limitDelta' } as const, {})
 const turns = atom({ plugin: 'cost-bar', key: 'turns' } as const, 0)
-const ttl = atom({ plugin: 'cost-bar', key: 'ttl' } as const, '5m')
+const ttl = atom({ plugin: 'cost-bar', key: 'ttl' } as const, null)
 const lastRequestAt = atom({ plugin: 'cost-bar', key: 'lastRequestAt' } as const, null)
 
 export const register: Register = on => {
   // Seed from the ledger so a resumed session shows its totals before the first turn ends.
   on('session.start', async ($, e, next) => {
     const settings = await $.settings.read()
-    const resolved = resolveTtl({
+    const resolved = explicitTtl({
       force5m: await $.env.get('FORCE_PROMPT_CACHING_5M'),
       envTtl: await $.env.get('CLAUDE_CODE_PROMPT_CACHE_TTL'),
       settingTtl: settings.promptCacheTtl,
@@ -83,7 +83,8 @@ export const register: Register = on => {
     const last = await read($, delta)
     const lim = formatLimits(await read($, limits), await $.clock.now(), await read($, limitDelta))
     const at = await read($, lastRequestAt)
-    const kind = await read($, ttl)
+    // Rate limits arrive with the first response, so the default is decided at render time.
+    const kind = resolveTtl({ envTtl: await read($, ttl) ?? undefined }, (await read($, limits)).length > 0)
     const left = at === null ? null : at + TTL_MS[kind] - (await $.clock.now())
     const below = await next(e)
     if (cost === null || e.props.hasSurvey) return below

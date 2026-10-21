@@ -11,6 +11,12 @@ test('resolveTtl follows Claude Code precedence', () => {
   expect(resolveTtl({ force5m: '1', envTtl: '1h' })).toBe('5m')
 })
 
+test('resolveTtl: subscription defaults to 1h unless set explicitly', () => {
+  expect(resolveTtl({}, true)).toBe('1h')
+  expect(resolveTtl({ envTtl: '5m' }, true)).toBe('5m')
+  expect(resolveTtl({ force5m: '1' }, true)).toBe('5m')
+})
+
 test('formatRemaining counts down and expires', () => {
   expect(formatRemaining(252_000)).toBe('4:12')
   expect(formatRemaining(3_599_100)).toBe('60:00')

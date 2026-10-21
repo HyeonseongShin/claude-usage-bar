@@ -7,7 +7,7 @@ declare module 'claude-code' {
       delta: number | null
       limitDelta: Record<string, number>
       turns: number
-      ttl: '5m' | '1h'
+      ttl: '5m' | '1h' | null
       lastRequestAt: number | null
     }
   }
