@@ -1,5 +1,7 @@
 export const formatUsd = (usd: number): string => `$${usd.toFixed(usd < 1 ? 3 : 2)}`
 
+export const formatTotalUsd = (usd: number): string => `$${usd.toFixed(1)}`
+
 export const formatTokens = (n: number): string =>
   n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}k` : `${n}`
 

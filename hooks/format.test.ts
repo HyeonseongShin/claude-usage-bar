@@ -1,10 +1,16 @@
 import { expect, test } from 'claude-code/testing'
 
-import { formatContext, formatLimits, formatModel, formatUsd } from './format'
+import { formatContext, formatLimits, formatModel, formatTotalUsd, formatUsd } from './format'
 
 test('formatUsd: three decimals under $1, two above', () => {
   expect(formatUsd(0.0421)).toBe('$0.042')
   expect(formatUsd(12.345)).toBe('$12.35')
+})
+
+test('formatTotalUsd: one decimal', () => {
+  expect(formatTotalUsd(0.0421)).toBe('$0.0')
+  expect(formatTotalUsd(0.64)).toBe('$0.6')
+  expect(formatTotalUsd(12.345)).toBe('$12.3')
 })
 
 test('formatContext: bar, percent and k/M units', () => {

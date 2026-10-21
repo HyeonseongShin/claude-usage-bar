@@ -2,7 +2,7 @@ import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
 import { TTL_MS, explicitTtl, formatRemaining, resolveTtl } from './cache'
-import { formatContext, formatLimits, formatModel, formatUsd } from './format'
+import { formatContext, formatLimits, formatModel, formatTotalUsd, formatUsd } from './format'
 
 const usd = atom({ plugin: 'cost-bar', key: 'usd' } as const, null)
 const context = atom({ plugin: 'cost-bar', key: 'context' } as const, null)
@@ -99,7 +99,7 @@ export const register: Register = on => {
       <Box flexDirection="column">
         {below}
         <Text dimColor>
-          {id ? `${formatModel(id, ctx?.window)} | ` : ''}{formatUsd(cost)}{last ? ` (+${formatUsd(last)})` : ''}
+          {id ? `${formatModel(id, ctx?.window)} | ` : ''}{formatTotalUsd(cost)}{last ? ` (+${formatUsd(last)})` : ''}
           {ctx ? ` | ${formatContext(ctx)}` : ''}{lim ? ` | ${lim}` : ''} | Turn {turn}
           {left === null ? '' : ` | Cache(${kind}) ${formatRemaining(left)}`}
         </Text>
