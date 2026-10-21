@@ -2,6 +2,6 @@
   "name": "cost-bar",
   "version": "0.1.0",
   "author": { "name": "Hyeonseong Shin" },
-  "description": "Shows the session cost (as /cost totals it) in a bar above the prompt.",
+  "description": "Shows model, session cost, context, 5h/7d plan usage and cache countdown in a bar above the prompt.",
   "types": "./types/index.d.ts"
 }

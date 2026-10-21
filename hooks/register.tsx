@@ -84,7 +84,10 @@ export const register: Register = on => {
     const lim = formatLimits(await read($, limits), await $.clock.now(), await read($, limitDelta))
     const at = await read($, lastRequestAt)
     // Rate limits arrive with the first response, so the default is decided at render time.
-    const kind = resolveTtl({ envTtl: await read($, ttl) ?? undefined }, (await read($, limits)).length > 0)
+    const lims = await read($, limits)
+    // ponytail: >=100% is assumed to mean extra-usage credits (5m); unverified, fix if it misleads.
+    const subscription = lims.length > 0 && lims.every(l => l.percentUsed < 100)
+    const kind = resolveTtl({ envTtl: await read($, ttl) ?? undefined }, subscription)
     const left = at === null ? null : at + TTL_MS[kind] - (await $.clock.now())
     const below = await next(e)
     if (cost === null || e.props.hasSurvey) return below
