@@ -16,6 +16,10 @@ const lastRequestAt = atom({ plugin: 'cost-bar', key: 'lastRequestAt' } as const
 export const register: Register = on => {
   // Seed from the ledger so a resumed session shows its totals before the first turn ends.
   on('session.start', async ($, e, next) => {
+    // ponytail: redraw once a second forever; stop it when idle if the repaint cost shows up.
+    // Started first so a failing settings/env read below cannot leave the countdown frozen.
+    $.clock.every(1000, () => $.ui.invalidate('ui.render'))
+
     const settings = await $.settings.read()
     const resolved = explicitTtl({
       force5m: await $.env.get('FORCE_PROMPT_CACHING_5M'),
@@ -24,9 +28,6 @@ export const register: Register = on => {
       enable1h: await $.env.get('ENABLE_PROMPT_CACHING_1H'),
     })
     await update($, ttl, () => resolved)
-
-    // ponytail: redraw once a second forever; stop it when idle if the repaint cost shows up.
-    $.clock.every(1000, () => $.ui.invalidate('ui.render'))
 
     const u = await $.session.usage()
     if (u.cost) await update($, usd, () => u.cost!.usd)
