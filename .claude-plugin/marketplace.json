@@ -1,0 +1,6 @@
+{
+  "name": "claude-usage-bar",
+  "description": "Claude Code mods that show usage in the UI.",
+  "owner": { "name": "Hyeonseong Shin" },
+  "plugins": [{ "name": "cost-bar", "source": "./" }]
+}
