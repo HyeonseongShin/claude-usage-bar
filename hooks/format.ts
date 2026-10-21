@@ -17,12 +17,11 @@ export const formatContext = ({ tokens, window, percent }: Context): string => {
   return `Context [${bar}] ${pct}% ${formatTokens(tokens ?? 0)}/${formatTokens(window)}`
 }
 
-// 'claude-sonnet-5-5[1m]' -> 'Sonnet 5.5'; anything unrecognised is shown as-is. (M) marks a 1M window.
-export const formatModel = (id: string, window = 0): string => {
+// 'claude-sonnet-5-5[1m]' -> 'Sonnet 5.5'; anything unrecognised is shown as-is.
+export const formatModel = (id: string): string => {
   const m = /^claude-([a-z]+)((?:-\d{1,2})+)(?:-\d{8})?(?:\[.*\])?$/.exec(id)
-  const name = m ? `${m[1]!.charAt(0).toUpperCase()}${m[1]!.slice(1)} ${m[2]!.slice(1).replaceAll('-', '.')}` : id
 
-  return window >= 1e6 ? `${name}(M)` : name
+  return m ? `${m[1]!.charAt(0).toUpperCase()}${m[1]!.slice(1)} ${m[2]!.slice(1).replaceAll('-', '.')}` : id
 }
 
 export const formatDuration = (ms: number): string => {

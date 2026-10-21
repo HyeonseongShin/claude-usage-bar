@@ -99,7 +99,7 @@ export const register: Register = on => {
       <Box flexDirection="column">
         {below}
         <Text dimColor>
-          {id ? `${formatModel(id, ctx?.window)} | ` : ''}{formatTotalUsd(cost)}{last ? ` (+${formatUsd(last)})` : ''}
+          {id ? `${formatModel(id)} | ` : ''}{formatTotalUsd(cost)}{last ? ` (+${formatUsd(last)})` : ''}
           {ctx ? ` | ${formatContext(ctx)}` : ''}{lim ? ` | ${lim}` : ''} | Turn {turn}
           {left === null ? '' : ` | Cache(${kind}) ${formatRemaining(left)}`}
         </Text>

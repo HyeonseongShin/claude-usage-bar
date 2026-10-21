@@ -31,8 +31,8 @@ test('formatLimits: 5h and 7d with time to reset', () => {
   expect(formatLimits([], now)).toBe('')
 })
 
-test('formatModel: id to name, (M) suffix for 1M windows', () => {
-  expect(formatModel('claude-sonnet-5-5[1m]', 1_000_000)).toBe('Sonnet 5.5(M)')
-  expect(formatModel('claude-sonnet-5-5', 200_000)).toBe('Sonnet 5.5')
+test('formatModel: id to name', () => {
+  expect(formatModel('claude-sonnet-5-5[1m]')).toBe('Sonnet 5.5')
+  expect(formatModel('claude-sonnet-5-5')).toBe('Sonnet 5.5')
   expect(formatModel('custom-model')).toBe('custom-model')
 })
