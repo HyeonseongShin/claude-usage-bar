@@ -26,8 +26,8 @@ test('formatLimits: 5h and 7d with time to reset', () => {
     { kind: 'five_hour', percentUsed: 14.2, resetsAt: at(4 * 3600e3 + 40 * 60e3) },
     { kind: 'seven_day', percentUsed: 9, resetsAt: at((4 * 24 + 22) * 3600e3) },
   ]
-  expect(formatLimits(limits, now)).toBe('5h: 14% (4h40m) │ 7d: 9% (4d22h)')
-  expect(formatLimits(limits, now, { five_hour: 2.04 })).toBe('5h: 14% (+2%) (4h40m) │ 7d: 9% (4d22h)')
+  expect(formatLimits(limits, now)).toBe('5h: 14% (4h40m) · 7d: 9% (4d22h)')
+  expect(formatLimits(limits, now, { five_hour: 2.04 })).toBe('5h: 14% (+2%) (4h40m) · 7d: 9% (4d22h)')
   expect(formatLimits([], now)).toBe('')
 })
 

@@ -47,4 +47,4 @@ export const formatLimits = (limits: RateLimit[], now: number, deltas: Record<st
     const up = d ? ` (+${Number(d.toFixed(1))}%)` : ''
 
     return [`${label}: ${Math.round(l.percentUsed)}%${up}${reset}`]
-  }).join(' │ ')
+  }).join(' · ')
