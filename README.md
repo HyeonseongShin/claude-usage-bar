@@ -3,7 +3,7 @@
 `cost-bar` is a Claude Code mod for subscription users. It draws one bar above the prompt with the model, session cost, context fill, 5h/7d plan usage, turn count and a prompt-cache countdown. It stacks under other mods that draw above the prompt instead of replacing them.
 
 ```
-Sonnet 5.5 | $0.146 (+$0.012) | Context [█░░░░░░░░░] 5% 53k/1.0M | 5h: 14% (+2%) (4h40m) │ 7d: 9% (+1%) (4d22h) | Turn 2 | Cache(1h) 58:20
+Sonnet 5.5 · $0.146 (+$0.012) · Context [█░░░░░░░░░] 5% 53k/1.0M · 5h: 14% (+2%) (4h40m) │ 7d: 9% (+1%) (4d22h) · Turn 2 · Cache(1h) 58:20
 ```
 
 | Field | Source |
