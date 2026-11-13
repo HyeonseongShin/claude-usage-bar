@@ -7,10 +7,10 @@ test('formatUsd: three decimals under $1, two above', () => {
   expect(formatUsd(12.345)).toBe('$12.35')
 })
 
-test('formatTotalUsd: one decimal', () => {
-  expect(formatTotalUsd(0.0421)).toBe('$0.0')
-  expect(formatTotalUsd(0.64)).toBe('$0.6')
-  expect(formatTotalUsd(12.345)).toBe('$12.3')
+test('formatTotalUsd: two decimals', () => {
+  expect(formatTotalUsd(0.0421)).toBe('$0.04')
+  expect(formatTotalUsd(0.64)).toBe('$0.64')
+  expect(formatTotalUsd(12.345)).toBe('$12.35')
 })
 
 test('formatContext: bar, percent and k/M units', () => {
